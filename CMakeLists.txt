@@ -59,6 +59,7 @@ target_link_libraries(finalboss
     hardware_pio
     hardware_clocks
     hardware_adc
+    hardware_dma
 )
 
 # Add the standard include files to the build
