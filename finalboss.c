@@ -18,7 +18,7 @@
 // Pino e canal do microfone no ADC.
 #define MIC_CHANNEL 2
 #define MIC_PIN (26 + MIC_CHANNEL)
-
+bool repeat = false;
 // Parâmetros e macros do ADC.
 #define ADC_CLOCK_DIV 96.f
 #define SAMPLES 200                                   // Número de amostras que serão feitas do ADC.
@@ -28,7 +28,7 @@
 
 #define abs(x) ((x < 0) ? (-x) : (x))
 
-// Canal e configurações do DMA
+// Canal e configurações do DMA 
 uint dma_channel;
 dma_channel_config dma_cfg;
 
@@ -402,9 +402,10 @@ Matriz_leds_config matriz = {
     bool repeating_timer_callback(struct repeating_timer *t)
     {
         int char_lido;
-    
+        
         if (!som)
         {
+            repeat = false;
             if (red)
             {
                 if (vermelho > 0)
@@ -427,7 +428,7 @@ Matriz_leds_config matriz = {
                     gpio_put(LED_R, 0);
                     gpio_put(LED_G, 1);
                     gpio_put(LED_B, 0);
-    
+                        
                     buzzer_active2 = true;
                 }
             }
@@ -583,15 +584,22 @@ Matriz_leds_config matriz = {
             if(buzzer_active1){
                 toque_curto_agudo(BUZZER_PIN);
                 buzzer_active1 = false;
+                repeat = false;
             }else if(buzzer_active2){
                 toque_longo_grave(BUZZER_PIN);
                 buzzer_active2 = false;
+                repeat = false;
             }else if(buzzer_active3){
                 toque_intermitente(BUZZER_PIN);
                 buzzer_active3 = false;
+                repeat = false;
             }else if(buzzer_active4){
-                toque_ascendente(BUZZER_PIN);
-                buzzer_active4 = false;
+                if(!repeat){
+                    toque_ascendente(BUZZER_PIN);
+                    buzzer_active4 = false;
+                    repeat = true;
+                }
+                
             }
         }
     }
