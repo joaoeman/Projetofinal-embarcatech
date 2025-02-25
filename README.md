@@ -1,6 +1,4 @@
 a main do código se encontra no arquivo: finalboss.c
-link da documentação do projeto: [U7T_tic370101617_joaoesnascimento.pdf](https://github.com/user-attachments/files/18951771/U7T_tic370101617_joaoesnascimento.pdf)
-
 
 
 Semáforo inclusivo para PCD's:
